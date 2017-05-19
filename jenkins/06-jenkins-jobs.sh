@@ -207,7 +207,7 @@ cat > "$JENKINS_HOME/jobs/deploy/config.xml" <<"EOF"
       <doNotFingerprintArtifacts>false</doNotFingerprintArtifacts>
     </hudson.plugins.copyartifact.CopyArtifact>
     <hudson.tasks.Shell>
-      <command>rm /var/lib/jenkins/.ssh/known_hosts
+      <command>rm /var/lib/jenkins/.ssh/known_hosts || true
 
 if [ ! -f /var/lib/jenkins/.ssh/known_hosts ]; then
     ssh-keyscan -H 10.0.0.12 &gt; /var/lib/jenkins/.ssh/known_hosts
