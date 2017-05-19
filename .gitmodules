@@ -1,0 +1,6 @@
+[submodule "boeing-infrastructure"]
+	path = boeing-infrastructure
+	url = https://github.com/quinn-boeing-application/boeing-infrastructure.git
+[submodule "boeing-service"]
+	path = boeing-service
+	url = https://github.com/quinn-boeing-application/boeing-service.git
