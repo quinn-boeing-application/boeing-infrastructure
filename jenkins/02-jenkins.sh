@@ -1,7 +1,5 @@
 #!/bin/bash
 
-CREDENTIALS="admin:override"
-
 export DEBIAN_FRONTEND=noninteractive
 
 wget -q -O - https://pkg.jenkins.io/debian/jenkins-ci.org.key | apt-key add -

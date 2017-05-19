@@ -207,15 +207,18 @@ cat > "$JENKINS_HOME/jobs/deploy/config.xml" <<"EOF"
       <doNotFingerprintArtifacts>false</doNotFingerprintArtifacts>
     </hudson.plugins.copyartifact.CopyArtifact>
     <hudson.tasks.Shell>
-      <command>if [ ! -f /var/lib/jenkins/.ssh/known_hosts ]; then
-    ssh-keyscan -H 10.0.0.12 &gt;&gt; /var/lib/jenkins/.ssh/known_hosts
+      <command>rm /var/lib/jenkins/.ssh/known_hosts
+
+if [ ! -f /var/lib/jenkins/.ssh/known_hosts ]; then
+    ssh-keyscan -H 10.0.0.12 &gt; /var/lib/jenkins/.ssh/known_hosts
 fi
 
 scp helloimage.tar ubuntu@10.0.0.12:/tmp/
-ssh ubuntu@10.0.0.12 &quot;sudo docker load &lt; /tmp/helloimage.tar&quot;
-ssh ubuntu@10.0.0.12 &quot;sudo docker tag helloimage localhost:5000/helloimage:latest&quot;
-ssh ubuntu@10.0.0.12 &quot;sudo docker push localhost:5000/helloimage:latest&quot;
+
 ssh ubuntu@10.0.0.12 &lt;&lt;EOF
+sudo docker load &lt; /tmp/helloimage.tar
+sudo docker tag helloimage localhost:5000/helloimage:latest
+sudo docker push localhost:5000/helloimage:latest
 SERVICES=$(sudo docker service ls --filter name=helloservice --quiet | wc -l)
 if [[ &quot;$SERVICES&quot; -eq 0 ]]; then
     sudo docker service create --name helloservice --replicas 3 --update-delay 10s --publish 8888:8888 localhost:5000/helloimage

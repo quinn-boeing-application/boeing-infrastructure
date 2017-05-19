@@ -42,7 +42,6 @@ Vagrant.configure("2") do |config|
     manager1.vm.provision "shell", path: "manager/01-docker.sh"
     manager1.vm.provision "shell", path: "manager/02-docker-swarm-manager.sh"
     manager1.vm.provision "shell", path: "manager/03-jenkins-credentials.sh"
-    manager1.vm.synced_folder "boeing-service", "/srv"
   end
 
   config.vm.define "worker1" do |worker1|
